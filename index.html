@@ -1,0 +1,171 @@
+<!DOCTYPE html> <!-- Definiert den Dokumenttyp HTML5 -->
+
+<html lang="de"> <!-- Beginn der HTML-Seite, Sprache Deutsch -->
+<head> <!-- Kopfbereich mit Metadaten -->
+
+<meta charset="UTF-8"> <!-- Zeichencodierung für Umlaute -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Richtige Darstellung auf mobilen Geräten -->
+<title>Autocoll</title> <!-- Titel im Browser-Tab -->
+
+<style> /* Beginn CSS für Layout und Design */
+
+html, body{ /* Betrifft gesamte Seite */
+height:100%; /* Seite nutzt volle Höhe */
+margin:0; /* Entfernt Standardrand des Browsers */
+font-family:Arial, sans-serif; /* Schriftart */
+}
+
+body{ /* Hauptlayout der Seite */
+display:flex; /* Flexbox Layout */
+flex-direction:column; /* Elemente untereinander */
+min-height:100vh; /* Mindesthöhe = Bildschirmhöhe */
+}
+
+/* ---------------- HEADER ---------------- */
+
+header{ /* Kopfbereich der Webseite */
+display:flex; /* Elemente nebeneinander */
+align-items:center; /* Vertikale Zentrierung */
+justify-content:space-between; /* Platz zwischen Logo und Navigation */
+padding:10px 40px; /* Innenabstand */
+background:#000066; /* Hintergrundfarbe (gleicher Blauton wie Logo) */
+}
+
+/* Logo */
+
+.logo img{ /* Bild des Logos */
+height:70px; /* Höhe des Logos */
+}
+
+/* Navigation */
+
+nav{ /* Navigationscontainer */
+position:absolute; /* Ermöglicht perfekte Zentrierung */
+left:50%; /* Startpunkt Mitte */
+transform:translateX(-50%); /* Verschiebt Navigation exakt in die Mitte */
+}
+
+nav a{ /* Buttons in der Navigation */
+background:#d9d9d9; /* Grauer Hintergrund */
+padding:10px 18px; /* Innenabstand */
+margin:0 8px; /* Abstand zwischen Buttons */
+text-decoration:none; /* Entfernt Unterstreichung */
+color:#000; /* Textfarbe */
+font-weight:bold; /* Fettschrift */
+border-radius:4px; /* Leicht abgerundete Ecken */
+}
+
+nav a:hover{ /* Effekt wenn Maus über Button ist */
+background:#c0c0c0; /* Dunkleres Grau */
+}
+
+/* ---------------- HAUPTBEREICH ---------------- */
+
+main{ /* Hauptinhalt */
+flex:1; /* Füllt freien Platz zwischen Header und Footer */
+padding:60px 20px; /* Innenabstand */
+display:flex; /* Zentriert Inhalt */
+justify-content:center; /* Horizontal zentriert */
+}
+
+.content{ /* Container für Startseitentext */
+max-width:700px; /* Maximale Textbreite */
+text-align:center; /* Text mittig */
+}
+
+.content h1{ /* Überschrift */
+margin-bottom:20px; /* Abstand nach unten */
+}
+
+.content p{ /* Textabsätze */
+line-height:1.6; /* Zeilenabstand */
+}
+
+/* Button für "Mehr" */
+
+.mehr-button{
+display:inline-block; /* Button-Format */
+margin-top:20px; /* Abstand nach oben */
+padding:10px 18px; /* Innenabstand */
+background:#0a0a7a; /* Blau wie Header */
+color:white; /* Textfarbe */
+text-decoration:none; /* Keine Unterstreichung */
+border-radius:4px; /* Runde Ecken */
+}
+
+.mehr-button:hover{
+background:#08085e; /* Dunkleres Blau */
+}
+
+/* ---------------- FOOTER ---------------- */
+
+footer{ /* Fußbereich */
+background:#f4f4f4; /* Hintergrundfarbe */
+border-top:1px solid #ddd; /* Linie über Footer */
+padding:15px 40px; /* Innenabstand */
+display:flex; /* Links nebeneinander */
+justify-content:center; /* Zentriert */
+gap:25px; /* Abstand zwischen Links */
+margin-top:auto; /* Footer bleibt unten */
+}
+
+footer a{ /* Links im Footer */
+text-decoration:none; /* Keine Unterstreichung */
+color:#333; /* Textfarbe */
+font-size:14px; /* Schriftgröße */
+}
+
+footer a:hover{
+text-decoration:underline; /* Unterstreichen beim Hover */
+}
+
+</style> <!-- Ende CSS -->
+
+</head>
+
+<body> <!-- Sichtbarer Bereich der Seite -->
+
+<header> <!-- Kopfzeile -->
+
+<div class="logo"> <!-- Logo-Bereich -->
+<img src="Logo.gif" alt="Firmenlogo"> <!-- Logo-Datei im selben Ordner -->
+</div>
+
+<nav> <!-- Navigationsbuttons -->
+<a href="index.html">Startseite</a> <!-- Link zur Startseite -->
+<a href="produkte.html">Produkte</a> <!-- zukünftige Produktseite -->
+<a href="wissen.html">Wissen</a> <!-- zukünftige Wissensseite -->
+<a href="kontakt.html">Kontakt</a> <!-- zukünftige Kontaktseite -->
+</nav>
+
+</header> <!-- Ende Header -->
+
+<main> <!-- Hauptinhalt -->
+
+<div class="content"> <!-- Textcontainer -->
+
+<h1>Geschichte</h1> <!-- Überschrift -->
+
+<p>
+Hier steht ein kurzer Einleitungstext über die Geschichte des Unternehmens.
+Dieser Abschnitt dient als Vorschau für Besucher der Webseite.
+Der vollständige Text kann über den folgenden Button aufgerufen werden.
+</p>
+
+<a class="mehr-button" href="geschichte.html">Mehr</a> <!-- Link zur vollständigen Seite -->
+
+</div>
+
+</main>
+
+<footer> <!-- Footer -->
+
+<a href="Impressum.pdf" target="_blank">Impressum</a> <!-- öffnet Impressum PDF -->
+<a href="Datenschutzerklaerung.pdf" target="_blank">Datenschutz</a> <!-- öffnet Datenschutz PDF -->
+<a href="AGB.pdf" target="_blank">AGB</a> <!-- öffnet AGB PDF -->
+<a href="FAQ.pdf" target="_blank">FAQ</a> <!-- öffnet FAQ PDF -->
+
+</footer>
+
+</body>
+</html>
