@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Autocoll</title>
+
+  <style>
+    :root {
+      --content-max-width: 1030px;
+      --accordion-max-width: 927px;
+      --content-side-space: 40px;
+      --line-grey: #b8b8b8;
+      --brand-blue: #000066;
+      --bar-height: 40px;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background: #ffffff;
+      color: #111111;
+      overflow-x: hidden;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+    }
+
+    main {
+      background: #ffffff;
+      padding: 28px 0 90px 0;
+    }
+
+    .section-inner {
+      width: min(var(--content-max-width), calc(100% - (var(--content-side-space) * 2)));
+      margin: 0 auto;
+    }
+
+    .accordion-inner,
+    .logo-inner {
+      width: min(var(--accordion-max-width), calc(100% - (var(--content-side-space) * 2)));
+      margin: 0 auto;
+    }
+
+    .sticky-top-area {
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      width: 100%;
+      background: #ffffff;
+      padding-bottom: 80px;
+    }
+
+    .logo-block {
+      line-height: 0;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .logo-block img {
+      display: block;
+      width: 100%;
+      max-width: var(--accordion-max-width);
+      height: auto;
+      margin: 0 auto;
+    }
+
+    .blue-bar {
+      width: 100%;
+      height: var(--bar-height);
+      background: var(--brand-blue);
+      margin-top: 18px;
+    }
+
+    .accordion-section {
+      background: #ffffff;
+    }
+
+    .accordion-box {
+      width: 100%;
+      border-top: 1px solid var(--line-grey);
+    }
+
+    .accordion-box:last-child {
+      border-bottom: 1px solid var(--line-grey);
+    }
+
+    .accordion-box summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 18px 0;
+    }
+
+    .accordion-box summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .accordion-content {
+      padding: 18px 0 34px 0;
+      border-top: 1px solid #c8c8c8;
+    }
+
+    .empty-content {
+      padding: 0;
+      border-top: none;
+    }
+
+    .accordion-label,
+    .autocoll-summary-title-row,
+    .preview-summary-title-row {
+      display: block;
+    }
+
+    .accordion-title {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 0;
+      color: #000000;
+      text-transform: none;
+    }
+
+    .accordion-title sup {
+      font-size: 60%;
+      vertical-align: super;
+      line-height: 0;
+    }
+
+    .accordion-title-normal {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 0;
+      color: #000000;
+      text-transform: none;
+    }
+
+    .autocoll-summary-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 34px;
+    }
+
+    .autocoll-summary-text,
+    .preview-summary-text {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .autocoll-summary-title-row,
+    .preview-summary-title-row {
+      margin-bottom: 12px;
+    }
+
+    .autocoll-summary-preview,
+    .preview-summary-preview {
+      display: block;
+      font-size: 18px;
+      line-height: 1.6;
+      color: #111111;
+      text-align: left;
+    }
+
+    .autocoll-preview-image {
+      width: 110px;
+      flex-shrink: 0;
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-start;
+    }
+
+    .autocoll-preview-image img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .autocoll-box[open] .autocoll-summary-preview,
+    .preview-box[open] .preview-summary-preview {
+      display: none;
+    }
+
+    .autocoll-box[open] .autocoll-preview-image {
+      display: none;
+    }
+
+    .autocoll-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 46px;
+      align-items: start;
+    }
+
+    .autocoll-image-large img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .autocoll-text,
+    .preview-open-text {
+      font-size: 18px;
+      line-height: 1.7;
+      color: #111111;
+      text-align: justify;
+    }
+
+    .autocoll-text p,
+    .preview-open-text p {
+      margin: 0 0 18px 0;
+    }
+
+    .autocoll-text ul {
+      margin: 0 0 18px 0;
+      padding-left: 24px;
+    }
+
+    .autocoll-text li {
+      margin-bottom: 8px;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .product-card {
+      min-height: 140px;
+      border: 1px solid #000000;
+      background: #ffffff;
+      padding: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 18px;
+      line-height: 1.4;
+      color: #111111;
+    }
+
+
+    .bottom-space {
+      height: 500px;
+    }
+
+    footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      z-index: 1000;
+      width: 100%;
+      min-height: var(--bar-height);
+      background: var(--brand-blue);
+      padding: 8px 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 25px;
+      flex-wrap: wrap;
+    }
+
+    footer a {
+      text-decoration: none;
+      color: #ffffff;
+      font-size: 14px;
+      line-height: 1;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+      color: #ffffff;
+    }
+
+    @media (max-width: 900px) {
+      :root {
+        --content-side-space: 30px;
+      }
+
+      .autocoll-layout {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+
+      .autocoll-summary-row {
+        gap: 20px;
+      }
+
+      .autocoll-preview-image {
+        width: 90px;
+      }
+
+      .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 700px) {
+      :root {
+        --content-side-space: 15px;
+      }
+
+      main {
+        padding: 18px 0 70px 0;
+      }
+
+      .accordion-title,
+      .accordion-title-normal {
+        font-size: 22px;
+      }
+
+      .autocoll-summary-preview,
+      .preview-summary-preview,
+      .autocoll-text,
+      .preview-open-text {
+        font-size: 16px;
+      }
+
+      .autocoll-summary-row {
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      .autocoll-preview-image {
+        width: 100px;
+        justify-content: flex-start;
+      }
+
+      .product-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .product-card {
+        min-height: 110px;
+        font-size: 16px;
+      }
+
+      .bottom-space {
+        height: 320px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main>
+
+    <section class="accordion-section">
+
+      <div class="sticky-top-area">
+        <div class="logo-inner">
+          <div class="logo-block">
+            <img src="Header/Banner.bmp" alt="Autocoll Logo">
+          </div>
+        </div>
+        <div class="blue-bar"></div>
+      </div>
+
+      <div class="accordion-inner">
+
+        <details class="accordion-box autocoll-box">
+          <summary>
+            <span class="autocoll-summary-row">
+
+              <span class="autocoll-summary-text">
+                <span class="autocoll-summary-title-row">
+                  <span class="accordion-title">AUTOCOLL<sup>®</sup></span>
+                </span>
+
+                <span class="autocoll-summary-preview">
+                  AUTOCOLL<sup>®</sup> ist ein eingetragenes Warenzeichen der Troeger &amp; Bücking KG und steht für selbstklebende Folienschilder, die höchste Ansprüche an Qualität / Beständigkeit und Lebensdauer erfüllen.
+                </span>
+              </span>
+
+              <span class="autocoll-preview-image">
+                <img src="Bild.png" alt="AUTOCOLL Produktbild">
+              </span>
+
+            </span>
+          </summary>
+
+          <div class="accordion-content">
+            <div class="autocoll-layout">
+              <div class="autocoll-image-large">
+                <img src="Bild.png" alt="AUTOCOLL Produktbild">
+              </div>
+
+              <div class="autocoll-text">
+                <p>
+                  AUTOCOLL<sup>®</sup> ist ein eingetragenes Warenzeichen der Troeger &amp; Bücking KG und steht für selbstklebende Folienschilder, die höchste Ansprüche an Qualität / Beständigkeit und Lebensdauer erfüllen.
+                </p>
+
+                <p>
+                  Die Troeger &amp; Bücking KG - gegründet im Jahre 1883 als Nürnberger Abziehbilderfabrik und Lithografieanstalt - beschäftigt sich seit vielen Jahrzehnten mit der industriellen Kennzeichnungs- und Selbstklebetechnik.
+                </p>
+
+                <p>
+                  Langjährige Erfahrung, umfassendes know-how, sorgfältige Entwicklung und ausgiebige Erprobung zeichnen das heutige AUTOCOLL<sup>®</sup> - Programm aus. Es steht für ein umfangreiches Sortiment neutraler und bedruckter Selbstklebeschilder für nahezu alle Anforderungen der industriellen Kennzeichnungstechnik und ist eine Synthese aus:
+                </p>
+
+                <ul>
+                  <li>innovativer und sorgfältiger Forschungs- und Entwicklungsarbeit</li>
+                  <li>höchster Qualität und umfassender Überwachung der eingesetzten Rohstoffe</li>
+                  <li>hoch licht- und lösemittelbeständigen (Sieb-) Drucken</li>
+                  <li>modernsten Fertigungsanlagen für schnelle und wirtschaftliche Fertigung sowohl sehr kleiner als auch größter Mengen</li>
+                  <li>gezielter Produkt- und Produktionsüberwachung</li>
+                  <li>kompetenter Beratung und umfassendem Service vom ersten Kontakt bis lange nach der Lieferung</li>
+                </ul>
+
+                <p>
+                  Mit unserer Homepage möchten wir Ihnen einen ersten Einblick in die Vielfalt der Möglichkeiten bieten. Mit ausführlicher und individueller Beratung, technischen Informationen und entsprechenden Angeboten stehen wir gerne zur Verfügung. Bitte nehmen Sie Kontakt mit uns auf.
+                </p>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <details class="accordion-box preview-box">
+          <summary>
+            <span class="preview-summary-text">
+              <span class="preview-summary-title-row">
+                <span class="accordion-title-normal">Troeger &amp; Bücking</span>
+              </span>
+
+              <span class="preview-summary-preview">
+                Die Troeger &amp; Bücking KG - gegründet im Jahre 1883 als Nürnberger Abziehbilderfabrik und Lithografieanstalt - beschäftigt sich seit vielen Jahrzehnten mit der industriellen Kennzeichnungs- und Selbstklebetechnik.
+              </span>
+            </span>
+          </summary>
+          <div class="accordion-content">
+            <div class="preview-open-text">
+              <p>
+                Dies ist ein Platzhaltertext für den geöffneten Bereich von Troeger &amp; Bücking. Hier kann später eine ausführlichere Unternehmensbeschreibung mit Geschichte, Leistungen und weiteren Informationen eingefügt werden.
+              </p>
+              <p>
+                Auf Wunsch kann dieser Bereich auch im gleichen Stil wie AUTOCOLL mit Bild, mehreren Absätzen oder zusätzlichen Unterpunkten aufgebaut werden.
+              </p>
+            </div>
+          </div>
+        </details>
+
+        <details class="accordion-box preview-box">
+          <summary>
+            <span class="preview-summary-text">
+              <span class="preview-summary-title-row">
+                <span class="accordion-title-normal">Qualität</span>
+              </span>
+
+              <span class="preview-summary-preview">
+                Qualität steht bei AUTOCOLL<sup>®</sup> für zuverlässige Materialien, präzise Verarbeitung und dauerhaft beständige Kennzeichnungslösungen für industrielle Anwendungen.
+              </span>
+            </span>
+          </summary>
+          <div class="accordion-content">
+            <div class="preview-open-text">
+              <p>
+                Dies ist ein Platzhaltertext für den geöffneten Bereich Qualität. Hier können später Informationen zu Materialgüten, Prüfverfahren, Beständigkeiten und Qualitätsstandards ergänzt werden.
+              </p>
+              <p>
+                Ebenso können an dieser Stelle Hinweise zu Produktionskontrollen, individuellen Anforderungen und branchenspezifischen Qualitätsmerkmalen eingefügt werden.
+              </p>
+            </div>
+          </div>
+        </details>
+
+
+        <details class="accordion-box preview-box">
+          <summary>
+            <span class="preview-summary-text">
+              <span class="preview-summary-title-row">
+                <span class="accordion-title-normal">Produkte</span>
+              </span>
+
+              <span class="preview-summary-preview">
+                Produktübersicht AUTOCOLL<sup>®</sup> - Selbstklebeschilder
+              </span>
+            </span>
+          </summary>
+          <div class="accordion-content">
+            <div class="product-grid">
+              <div class="product-card">Produkt 1</div>
+              <div class="product-card">Produkt 2</div>
+              <div class="product-card">Produkt 3</div>
+              <div class="product-card">Produkt 4</div>
+              <div class="product-card">Produkt 5</div>
+              <div class="product-card">Produkt 6</div>
+              <div class="product-card">Produkt 7</div>
+              <div class="product-card">Produkt 8</div>
+              <div class="product-card">Produkt 9</div>
+            </div>
+          </div>
+        </details>
+
+      </div>
+    </section>
+
+    <section>
+      <div class="bottom-space"></div>
+    </section>
+
+  </main>
+
+  <footer>
+    <a href="Footer/Impressum.pdf" target="_blank">Impressum</a>
+    <a href="Footer/Datenschutzerklaerung.pdf" target="_blank">Datenschutz</a>
+    <a href="Footer/AGB.pdf" target="_blank">AGB</a>
+    <a href="Footer/FAQ.pdf" target="_blank">FAQ</a>
+  </footer>
+
+</body>
+
+</html>
